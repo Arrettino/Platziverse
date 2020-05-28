@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Arrettino/Platziverse/issues"
   },
-  "homepage": "https://github.com/Arrettino/Platziverse#readme"
+  "homepage": "https://github.com/Arrettino/Platziverse#readme",
+  "dependencies": {
+    "sequelize": "^5.21.11"
+  }
 }
