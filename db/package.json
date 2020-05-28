@@ -1,0 +1,19 @@
+{
+  "name": "db",
+  "version": "1.0.0",
+  "description": "A simple IoT Plataform - DB Module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Arrettino/Platziverse.git"
+  },
+  "author": "Ruben Pablo Arrettino",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Arrettino/Platziverse/issues"
+  },
+  "homepage": "https://github.com/Arrettino/Platziverse#readme"
+}
