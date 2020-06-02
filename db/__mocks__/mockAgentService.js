@@ -1,21 +1,32 @@
 const mockAgent = require("./mockAgent");
 
-const Agents = mockAgent.findAll;
-const id = mockAgent.findOne.id;
-const uuid = mockAgent.findOne.uuid;
-const uuidCond = { where: { uuid } };
-
 const mockAgentService = {
   hasMany: jest.fn(),
-  findOne: jest.fn((condition) => {
-    for (let key in Agents) {
-      if (condition.where.uuid === Agents[key].uuid) {
-        return Agents[key];
+  findAll: jest.fn((condition = false) => {
+    if (condition) {
+      if (condition.where.connected) {
+        return mockAgent.findConnected;
       }
-      return false;
+      if (condition.where.username) {
+        return mockAgent.findByUsername(condition.where.username);
+      }
     }
+    return mockAgent.findAll;
   }),
-  findByPk: jest.fn(() => Promise.resolve(mockAgent.findById(id))),
+  findOne: jest.fn((condition) => {
+    const agent = mockAgent.findByUuid(condition.where.uuid);
+    return Promise.resolve(agent);
+  }),
+  findByPk: jest.fn((id) => Promise.resolve(mockAgent.findById(id))),
   update: jest.fn(() => Promise.resolve(mockAgent.findOne)),
+  create: jest.fn((Agent) =>
+    Promise.resolve({
+      // When create an user the function return created.toJSON
+      // so this is the mock implementation for that functionality
+      toJSON() {
+        return Agent;
+      },
+    })
+  ),
 };
 module.exports = mockAgentService;
