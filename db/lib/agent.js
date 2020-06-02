@@ -1,12 +1,24 @@
-function setupAgent(AgentModel){
-    async function findById(id){
-        const Agent = await AgentModel.findByPk(id)
-        return Agent 
+function setupAgent(AgentModel) {
+  async function createOrUpdate(agent) {
+    const cond = { where: { uuid: agent.uuid } };
+    const existingAgent = await AgentModel.findOne(cond);
+    
+    if (existingAgent) {
+      const update = await AgentModel.update(agent, cond);
+      return update ? AgentModel.findOne(cond) : existingAgent;
     }
+    const result = await AgentModel.create(agent);
+    return result.toJSON();
+  }
 
-    return{
-        findById
-    }
+  async function findById(id) {
+    const Agent = await AgentModel.findByPk(id);
+    return Agent;
+  }
 
+  return {
+    findById,
+    createOrUpdate,
+  };
 }
-module.exports = setupAgent
+module.exports = setupAgent;
