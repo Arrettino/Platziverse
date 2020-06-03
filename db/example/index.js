@@ -58,6 +58,21 @@ async function run() {
   const connecteds = await Agent.findConnected();
   console.log(chalk.bgGreen("--findConnected--"));
   console.log(connecteds);
+  //create Metric
+  const metric = await Metric.create(conditionId, {
+    value: 500,
+    type: "disk",
+  });
+  console.log("--create Metric--");
+  console.log(metric);
+  //findByAgentId
+  const metricByAgent = await Metric.findByAgentId(1)
+  console.log("--findByAgentId--")
+  console.log(metricByAgent)
+  //findByTypeAgentId
+  const metricByType = await Metric.findByTypeAgentId("memory",1)
+  console.log("--findByTypeAgentId--")
+  console.log(metricByType)
 }
 
 function handleFatalError(e) {
