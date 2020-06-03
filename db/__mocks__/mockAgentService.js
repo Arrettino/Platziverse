@@ -14,8 +14,12 @@ const mockAgentService = {
     return mockAgent.findAll;
   }),
   findOne: jest.fn((condition) => {
-    const agent = mockAgent.findByUuid(condition.where.uuid);
-    return Promise.resolve(agent);
+    if(condition.where.id){
+      const agent = mockAgent.findById(condition.where.id)
+      return Promise.resolve(agent)
+    }
+    const agent = mockAgent.findByUsername(condition.where.username);
+    return Promise.resolve(agent[0]);
   }),
   findByPk: jest.fn((id) => Promise.resolve(mockAgent.findById(id))),
   update: jest.fn(() => Promise.resolve(mockAgent.findOne)),

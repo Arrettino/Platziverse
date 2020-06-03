@@ -15,31 +15,31 @@ async function run() {
   const { Agent, Metric } = await db(config).catch(handleFatalError);
   //createOrUpdate
   const agent = await Agent.createOrUpdate({
-    uuid: "aaa-aac",
-    name: "Isabel",
-    username: "Acosta",
+    username: "Luchito",
+    name: "Lucho",
     hostname: "localhost",
-    pid: 2,
+    pid: 5,
     connected: false,
   }).catch(handleFatalError);
-  console.log(chalk.bgGreen("--createOrUpdate--"));
+  console.log(chalk.bgGreen("--create or Update--"));
   console.log(agent);
+
   //findAll
   const agents = await Agent.findAll().catch(handleFatalError);
   console.log(chalk.bgGreen("--findAll--"));
   console.log(agents);
-  //findByUuid
-  const conditionUuid = "aaa-aab";
-  const ByUuid = await Agent.findByUuid(conditionUuid).catch(handleFatalError);
-  console.log(chalk.bgGreen("--findByUuid--"));
-  console.log(ByUuid);
-  //findByUuid null
-  const conditionUuidNull = "aaa-daa";
-  const ByUuidNull = await Agent.findByUuid(conditionUuidNull).catch(
+  //findById
+  const conditionId = 1;
+  const ById = await Agent.findById(conditionId).catch(handleFatalError);
+  console.log(chalk.bgGreen("--findById--"));
+  console.log(ById);
+  //findById null
+  const conditionIdNull = 5;
+  const ByIdNull = await Agent.findById(conditionIdNull).catch(
     handleFatalError
   );
-  console.log(chalk.bgGreen("--byUuidNull--"));
-  console.log(chalk.inverse(ByUuidNull));
+  console.log(chalk.bgGreen("--findByIdNull--"));
+  console.log(chalk.inverse(ByIdNull));
   //findByUsername
   const UsernameCond = "Arrettino";
   const Username = await Agent.findByUsername(UsernameCond).catch(
@@ -47,17 +47,23 @@ async function run() {
   );
   console.log(chalk.bgGreen("--findByUsername--"));
   console.log(Username);
+  //findByUsernameNull
+  const UsernameNullCond = "Arsadasjdbnasiuniawsdewnasbdyvsaurettino";
+  const UsernameNull = await Agent.findByUsername(UsernameNullCond).catch(
+    handleFatalError
+  );
+  console.log(chalk.bgGreen("--findByUsernameNull--"));
+  console.log(chalk.inverse(UsernameNull));
   //findConnected
-  const connecteds = await Agent.findConnected().catch(handleFatalError);
+  const connecteds = await Agent.findConnected();
   console.log(chalk.bgGreen("--findConnected--"));
   console.log(connecteds);
 }
 
 function handleFatalError(e) {
-  console.error(e.message);
-  console.error(e.stack);
+  console.error(chalk.bgRed(e.message));
+  console.error(chalk.bgRed(e.stack));
   process.exit(1);
 }
-
 
 run();

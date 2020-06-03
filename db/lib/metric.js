@@ -1,13 +1,13 @@
 function setupMetric(MetricModel, AgentModel) {
-  async function create(agentUuid, metric) {
-    const agent = await AgentModel.findOne({ where: { uuid: agentUuid } });
+  async function create(agentId, metric) {
+    const agent = await AgentModel.findOne({ where: { id: agentId } });
     if (agent) {
-      metric.agentId = agentUuid;
+      metric.agentId = agentId;
       const result = await MetricModel.create(metric);
       return result.toJSON();
     }
   }
-  async function findByAgentUuid(agentUuid) {
+  async function findByAgentId(agentId) {
     const metricsByAgentUuid = await MetricModel.findAll({
       attributes: ["type"],
       group: ["type"],
@@ -16,7 +16,7 @@ function setupMetric(MetricModel, AgentModel) {
           attributes: [],
           model: AgentModel,
           where: {
-            uuid: agentUuid,
+            id: agentId,
           },
         },
       ],
@@ -24,7 +24,7 @@ function setupMetric(MetricModel, AgentModel) {
     });
     return metricsByAgentUuid;
   }
-  async function findByTypeAgentUuid(metricType, agentUuid) {
+  async function findByTypeAgentId(metricType, agentId) {
     const metricsByTypeAgentUuid = await MetricModel.findAll({
       attributes: ["id", "type", "value", "createdAt"],
       where: {
@@ -37,7 +37,7 @@ function setupMetric(MetricModel, AgentModel) {
           attributes: [],
           model: AgentModel,
           where: {
-            uuid: agentUuid,
+            id: agentId,
           },
         },
       ],
@@ -48,8 +48,8 @@ function setupMetric(MetricModel, AgentModel) {
 
   return {
     create,
-    findByAgentUuid,
-    findByTypeAgentUuid,
+    findByAgentId,
+    findByTypeAgentId,
   };
 }
 module.exports = setupMetric;

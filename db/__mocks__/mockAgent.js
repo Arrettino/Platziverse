@@ -1,9 +1,8 @@
 const agents = [
   {
     id: 1,
-    uuid: "4bf322ab-d9f7-4166-a99b-f004203fb7de",
     name: "tpyett0",
-    username: "ionode",
+    username: "jabriel",
     hostname: "ionode",
     pid: 6,
     connected: false,
@@ -12,9 +11,8 @@ const agents = [
   },
   {
     id: 2,
-    uuid: "51817372-d9d4-4cdc-89eb-3e5fc3747aec",
     name: "saspy1",
-    username: "ionode",
+    username: "jaimito",
     hostname: "ionode",
     pid: 8,
     connected: true,
@@ -23,9 +21,8 @@ const agents = [
   },
   {
     id: 3,
-    uuid: "d46cc238-5c0d-4372-bf99-1f213dd9c47f",
     name: "hstroton2",
-    username: "server2",
+    username: "jirafales",
     hostname: "ionode-server2",
     pid: 2,
     connected: true,
@@ -34,9 +31,8 @@ const agents = [
   },
   {
     id: 4,
-    uuid: "258bdb8c-22d5-4ff0-9722-088376268cc6",
     name: "bmckeighen3",
-    username: "server2",
+    username: "jose",
     hostname: "ionode-server2",
     pid: 4,
     connected: false,
@@ -45,9 +41,8 @@ const agents = [
   },
   {
     id: 5,
-    uuid: "329c9ff0-ce84-4aea-bd30-c0a441d69406",
     name: "calvis4",
-    username: "test",
+    username: "jorge",
     hostname: "tests",
     pid: 9,
     connected: false,
@@ -57,8 +52,6 @@ const agents = [
 ];
 
 const newAgent = {
-  id: 1,
-  uuid: '4bf322ab-d9f7-4166-a99b-f324203fb7de',
   name: 'neo',
   username: 'matrix',
   hostname: 'ionode',
@@ -75,6 +68,5 @@ module.exports = {
   findConnected: agents.filter((agent) => agent.connected),
   findByUsername: (username) =>
     agents.filter((agent) => agent.username === username),
-  findByUuid: (uuid) => agents.find((agent) => agent.uuid === uuid),
   findById: (id) => agents.find((agent) => agent.id === id),
 };

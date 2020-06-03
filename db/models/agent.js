@@ -5,13 +5,15 @@ module.exports = function setupAgentModel(config) {
   const sequelize = setupDatabase(config);
 
   return sequelize.define("agent", {
-    uuid: {
-      type: Sequelize.STRING,
-      allowNull: false,
+    id: {
+      type: Sequelize.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
     },
     username: {
       type: Sequelize.STRING,
       allowNull: false,
+      unique: true
     },
     name: {
       type: Sequelize.STRING,

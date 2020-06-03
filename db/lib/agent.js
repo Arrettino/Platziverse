@@ -1,6 +1,6 @@
 function setupAgent(AgentModel) {
   async function createOrUpdate(agent) {
-    const cond = { where: { uuid: agent.uuid } };
+    const cond = { where: { username: agent.username } };
     const existingAgent = await AgentModel.findOne(cond);
     if (existingAgent) {
       const update = await AgentModel.update(agent, cond);
@@ -15,15 +15,15 @@ function setupAgent(AgentModel) {
     return Agents;
   }
 
-  async function findByUuid(uuid) {
-    const cond = { where: { uuid } };
+  async function findById(id) {
+    const cond = { where: { id } };
     const Agents = await AgentModel.findOne(cond);
     return Agents;
   }
 
   async function findByUsername(username) {
     const cond = { where: { username } };
-    const Agents = await AgentModel.findAll(cond);
+    const Agents = await AgentModel.findOne(cond);
     return Agents;
   }
 
@@ -37,7 +37,7 @@ function setupAgent(AgentModel) {
     createOrUpdate,
     findConnected,
     findAll,
-    findByUuid,
+    findById,
     findByUsername,
   };
 }

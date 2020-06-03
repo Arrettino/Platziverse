@@ -12,13 +12,13 @@ const setupDatabase = require("../");
 let db = null;
 
 //test create a metric
-const agentUuid = mockAgent.findOne.uuid;
-const UuidCreate = { where: { uuid: agentUuid } };
+const agentId = mockAgent.findOne.id
+const idCreate = { where: { id : agentId } };
 const newMetric = mockMetric.newMetric;
-const createMetric = { ...newMetric, agentId: agentUuid };
+const createMetric = { ...newMetric, agentId: agentId };
 
 //test findByAgentUuid
-const conditionUuid = {
+const conditionId = {
   attributes: ["type"],
   group: ["type"],
   include: [
@@ -26,17 +26,17 @@ const conditionUuid = {
       attributes: [],
       model: mockAgentService,
       where: {
-        uuid: agentUuid,
+        id: agentId,
       },
     },
   ],
   raw: true,
 };
-const metricUuid = mockMetric.findByAgentUuid(agentUuid);
+const metricId = mockMetric.findByAgentId(agentId);
 
-//test findByTypeAgentUuid
+//test findByTypeAgentId
 const type = "memory";
-const metricType = mockMetric.findByTypeAgentUuid(type, agentUuid);
+const metricType = mockMetric.findByTypeAgentId(type, agentId);
 const conditionType = {
   attributes: ["id", "type", "value", "createdAt"],
   where: {
@@ -49,7 +49,7 @@ const conditionType = {
       attributes: [],
       model: mockAgentService,
       where: {
-        uuid: agentUuid,
+        id: agentId,
       },
     },
   ],
@@ -87,23 +87,23 @@ test("MockMetric called whit MockAgent", () => {
 });
 
 test("Metric.create should be called to creat a metric", async () => {
-  const metric = await db.Metric.create(agentUuid, newMetric);
+  const metric = await db.Metric.create(agentId, newMetric);
   expect(mockAgentService.findOne).toHaveBeenCalledTimes(1);
-  expect(mockAgentService.findOne).toHaveBeenCalledWith(UuidCreate);
+  expect(mockAgentService.findOne).toHaveBeenCalledWith(idCreate);
   expect(mockMetricService.create).toHaveBeenCalledTimes(1);
   expect(mockMetricService.create).toHaveBeenCalledWith(newMetric);
   expect(metric).toStrictEqual(createMetric);
 });
 
 test("Metric.findByAgentUuid", async () => {
-  const metric = await db.Metric.findByAgentUuid(agentUuid);
+  const metric = await db.Metric.findByAgentId(agentId);
   expect(mockMetricService.findAll).toHaveBeenCalledTimes(1);
-  expect(mockMetricService.findAll).toHaveBeenCalledWith(conditionUuid);
-  expect(metric).toStrictEqual(metricUuid);
+  expect(mockMetricService.findAll).toHaveBeenCalledWith(conditionId);
+  expect(metric).toStrictEqual(metricId);
 });
 
-test("Metric.findByTypeAgentUuid", async () => {
-  const metric = await db.Metric.findByTypeAgentUuid(type, agentUuid);
+test("Metric.findByTypeAgentId", async () => {
+  const metric = await db.Metric.findByTypeAgentId(type, agentId);
   expect(mockMetricService.findAll).toHaveBeenCalledTimes(1);
   expect(mockMetricService.findAll).toHaveBeenCalledWith(conditionType);
   expect(metric).toStrictEqual(metricType);

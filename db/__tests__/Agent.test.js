@@ -11,15 +11,12 @@ const setupDatabase = require("../");
 const id = mockAgent.findOne.id;
 //test upgrade
 const oneAgent = mockAgent.findOne;
-const uuidUpgrade = oneAgent.uuid;
-const upgradeCondition = { where: { uuid: uuidUpgrade } };
+const usernameUpgrade = oneAgent.username;
+const upgradeCondition = { where: { username: usernameUpgrade } };
 //test create
 const newAgent = mockAgent.newAgent;
-const uuidCreate = newAgent.uuid;
-const createCondition = { where: { uuid: uuidCreate } };
-//test find by uuid
-const uuidOneAgent = oneAgent.uuid;
-const uuidCondition = { where: { uuid: uuidOneAgent } };
+const usernameCreate = newAgent.username;
+const createCondition = { where: { username: usernameCreate } };
 //test find all Agents
 const allAgents = mockAgent.findAll;
 //test find Agent conect
@@ -28,7 +25,7 @@ const conectCondition = { where: { connected: true } };
 //test find by username
 const username = oneAgent.username;
 const usernameCondition = { where: { username } };
-const AgentsWhithUsername = mockAgent.findByUsername(username);
+const AgentsWhithUsername = mockAgent.findByUsername(username)[0];
 
 let db = null;
 
@@ -57,7 +54,7 @@ test("Agent exist", () => {
 });
 
 test("MockAgent called whit MockMetric", () => {
-  expect(mockAgentService.hasMany).toHaveBeenCalledTimes(1)
+  expect(mockAgentService.hasMany).toHaveBeenCalledTimes(1);
   expect(mockAgentService.hasMany).toHaveBeenCalledWith(mockMetricService);
 });
 
@@ -75,7 +72,7 @@ test("Agent.createOrUpdate should be called to update an agent", async () => {
     oneAgent,
     upgradeCondition
   );
-  expect(agent).toBe(oneAgent);
+  expect(agent).toStrictEqual(oneAgent);
 });
 
 test("Agent.createOrUpdate should be called to create an agent", async () => {
@@ -86,14 +83,6 @@ test("Agent.createOrUpdate should be called to create an agent", async () => {
   expect(mockAgentService.create).toHaveBeenCalledWith(newAgent);
   expect(agent).toBe(newAgent);
 });
-
-test("Agent.findByUuid should be called an return the matched agent", async () => {
-  const agent = await db.Agent.findByUuid(uuidOneAgent);
-  expect(mockAgentService.findOne).toHaveBeenCalledTimes(1);
-  expect(mockAgentService.findOne).toHaveBeenCalledWith(uuidCondition);
-  expect(agent).toBe(oneAgent);
-});
-
 test("Agent.findAll should be called and return all the agents", async () => {
   const Agents = await db.Agent.findAll();
   expect(mockAgentService.findAll).toHaveBeenCalledTimes(1);
@@ -109,7 +98,7 @@ test("Agent.findConnected should return the connected agents", async () => {
 
 test("Agent.findByUsername should return the agents that have the username passed as argument", async () => {
   const Agent = await db.Agent.findByUsername(username);
-  expect(mockAgentService.findAll).toHaveBeenCalledTimes(1);
-  expect(mockAgentService.findAll).toHaveBeenCalledWith(usernameCondition);
+  expect(mockAgentService.findOne).toHaveBeenCalledTimes(1);
+  expect(mockAgentService.findOne).toHaveBeenCalledWith(usernameCondition);
   expect(Agent).toStrictEqual(AgentsWhithUsername);
 });

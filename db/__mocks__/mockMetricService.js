@@ -11,13 +11,13 @@ const mockMetricService = {
   ),
   findAll: jest.fn((condition) => {
     if (condition.limit) {
-      const MetricsByType = mockMetric.findByTypeAgentUuid(
+      const MetricsByType = mockMetric.findByTypeAgentId(
         condition.where.type,
-        condition.include[0].where.uuid
+        condition.include[0].where.id
       );
       return MetricsByType;
     }
-    const MetricsByUuid = mockMetric.findByAgentUuid(
+    const MetricsByUuid = mockMetric.findByAgentId(
       condition.include[0].where.uuid
     );
     return MetricsByUuid;

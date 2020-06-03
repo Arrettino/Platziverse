@@ -39,12 +39,12 @@ const newMetric = {
 module.exports = {
   findOne: metrics[0],
   newMetric,
-  findByAgentUuid: (agentUuid) => {
-    return metrics.filter((metric) => metric.agentId === agentUuid);
+  findByAgentId: (agentId) => {
+    return metrics.filter((metric) => metric.agentId === agentId);
   },
-  findByTypeAgentUuid: (type, agentUuid) => {
+  findByTypeAgentId: (type, agentId) => {
     return metrics.filter((metric) => {
-      return metric.type === type && metric.agentId === agentUuid;
+      return metric.type === type && metric.agentId === agentId;
     });
   },
 };
