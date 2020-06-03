@@ -9,20 +9,16 @@ function setupAgent(AgentModel) {
     const result = await AgentModel.create(agent);
     return result.toJSON();
   }
- 
+
   async function findAll() {
     const Agents = AgentModel.findAll();
     return Agents;
   }
 
   async function findByUuid(uuid) {
-    const Agents = await AgentModel.findOne(uuid);
+    const cond = { where: { uuid } };
+    const Agents = await AgentModel.findOne(cond);
     return Agents;
-  }
-
-  async function findById(id) {
-    const Agent = await AgentModel.findByPk(id);
-    return Agent;
   }
 
   async function findByUsername(username) {
@@ -38,7 +34,6 @@ function setupAgent(AgentModel) {
   }
 
   return {
-    findById,
     createOrUpdate,
     findConnected,
     findAll,

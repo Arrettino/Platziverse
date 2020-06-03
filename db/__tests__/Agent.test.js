@@ -88,7 +88,7 @@ test("Agent.createOrUpdate should be called to create an agent", async () => {
 });
 
 test("Agent.findByUuid should be called an return the matched agent", async () => {
-  const agent = await db.Agent.findByUuid(uuidCondition);
+  const agent = await db.Agent.findByUuid(uuidOneAgent);
   expect(mockAgentService.findOne).toHaveBeenCalledTimes(1);
   expect(mockAgentService.findOne).toHaveBeenCalledWith(uuidCondition);
   expect(agent).toBe(oneAgent);
