@@ -57,10 +57,8 @@ test("Agent exist", () => {
 });
 
 test("MockAgent called whit MockMetric", () => {
+  expect(mockAgentService.hasMany).toHaveBeenCalledTimes(1)
   expect(mockAgentService.hasMany).toHaveBeenCalledWith(mockMetricService);
-});
-test("MockMetric called whit MockAgent", () => {
-  expect(mockMetricService.belongsTo).toHaveBeenCalledWith(mockAgentService);
 });
 
 test("Agent.findById should retrun Agent entity", async () => {

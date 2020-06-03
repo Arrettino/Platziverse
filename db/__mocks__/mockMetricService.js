@@ -9,6 +9,19 @@ const mockMetricService = {
       },
     })
   ),
+  findAll: jest.fn((condition) => {
+    if (condition.limit) {
+      const MetricsByType = mockMetric.findByTypeAgentUuid(
+        condition.where.type,
+        condition.include[0].where.uuid
+      );
+      return MetricsByType;
+    }
+    const MetricsByUuid = mockMetric.findByAgentUuid(
+      condition.include[0].where.uuid
+    );
+    return MetricsByUuid;
+  }),
 };
 
 module.exports = mockMetricService;
