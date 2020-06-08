@@ -5,6 +5,17 @@ const db = require("./");
 
 const prompt = inquirer.createPromptModule();
 
+function getCommandFlags() {
+  return process.argv.filter(val => val.startsWith('--') || val.startsWith('-'))
+}
+
+async function validateAutomatedFlag() {
+  const validate = getCommandFlags().filter(val => val === '-y' || val === '--yes').length > 0
+  if (!validate){
+    await answer()
+  }
+}
+
 async function answer() {
   const answer = await prompt([
     {
@@ -13,13 +24,14 @@ async function answer() {
       message: "This will be destroy your database, are you sure?",
     },
   ]);
-  if (!answer.setup) {
+  if (!answer.setup ) {
     console.log(chalk.inverse("Script Canceled"));
     return process.exit(0);
   }
 }
+
 async function setup() {
-  await answer();
+  await validateAutomatedFlag()
   const config = {
     database: process.env.DB_NAME || "platziverse",
     username: process.env.DB_USER || "platzi",

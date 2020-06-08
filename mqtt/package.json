@@ -1,0 +1,32 @@
+{
+  "name": "mqtt",
+  "version": "1.0.0",
+  "description": "A simple IoT Plataform - MQTT Server",
+  "main": "server.js",
+  "scripts": {
+    "dev": "DEBUG=platziverse:*  nodemon server.js",
+    "start": "NODE_ENV=production node server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Arrettino/Platziverse.git"
+  },
+  "author": "Ruben Pablo Arrettino",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Arrettino/Platziverse/issues"
+  },
+  "homepage": "https://github.com/Arrettino/Platziverse#readme",
+  "dependencies": {
+    "aedes": "0.41.0",
+    "aedes-persistence-redis": "7.0.0",
+    "debug": "4.1.1",
+    "ionode-db": "file:../db",
+    "mqemitter-child-process": "1.0.0",
+    "nodemon": "^2.0.4",
+    "redis": "3.0.2"
+  },
+  "devDependencies": {
+    "mqtt": "3.0.0"
+  }
+}
