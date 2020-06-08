@@ -2,17 +2,22 @@ const debug = require("debug")("platziverse:db:setup");
 const inquirer = require("inquirer");
 const chalk = require("chalk");
 const db = require("./");
+const { config, handleFatalError } = require('platziverse-tools');
 
 const prompt = inquirer.createPromptModule();
 
 function getCommandFlags() {
-  return process.argv.filter(val => val.startsWith('--') || val.startsWith('-'))
+  return process.argv.filter(
+    (val) => val.startsWith("--") || val.startsWith("-")
+  );
 }
 
 async function validateAutomatedFlag() {
-  const validate = getCommandFlags().filter(val => val === '-y' || val === '--yes').length > 0
-  if (!validate){
-    await answer()
+  const validate =
+    getCommandFlags().filter((val) => val === "-y" || val === "--yes").length >
+    0;
+  if (!validate) {
+    await answer();
   }
 }
 
@@ -24,32 +29,26 @@ async function answer() {
       message: "This will be destroy your database, are you sure?",
     },
   ]);
-  if (!answer.setup ) {
+  if (!answer.setup) {
     console.log(chalk.inverse("Script Canceled"));
     return process.exit(0);
   }
 }
 
 async function setup() {
-  await validateAutomatedFlag()
-  const config = {
-    database: process.env.DB_NAME || "platziverse",
-    username: process.env.DB_USER || "platzi",
-    password: process.env.DB_PASS || "platzi",
-    host: process.env.DB_HOST || "localhost",
-    dialect: "postgres",
-    logging: (s) => debug(s),
-    setup: true,
-  };
+  await validateAutomatedFlag();
+  const databaseConfig = config
+  databaseConfig.logging =(s) => debug(s),
+  databaseConfig.setup= true
+  databaseConfig.database=jose
+  
 
   try {
-    await db(config);
+    await db(databaseConfig);
     console.log(chalk.bgGreen("Success!"));
     process.exit(0);
-  } catch (e) {
-    console.error(e.message);
-    console.error(e.stack);
-    process.exit(1);
+  } catch (err) {
+    handleFatalError(err)
   }
 }
 

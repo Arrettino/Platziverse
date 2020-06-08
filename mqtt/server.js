@@ -4,21 +4,11 @@ const mqemitter = require("mqemitter-child-process");
 const redisPersistence = require("aedes-persistence-redis");
 const net = require("net");
 const database = require("platziverse-db");
+const { config, handleFatalError } = require("platziverse-tools");
 
 const client = mqemitter.child();
 const port = 1883;
 const aedes = require("aedes")();
-
-const database_config = {
-  database: process.env.DB_NAME || "platziverse",
-  username: process.env.DB_USER || "platzi",
-  password: process.env.DB_PASS || "platzi",
-  host: process.env.DB_HOST || "localhost",
-  dialect: "postgres",
-  query: {
-    raw: true,
-  },
-};
 
 const server = net.createServer(aedes.handle);
 
@@ -26,20 +16,19 @@ const clients = new Map();
 let Agent;
 let Metric;
 
-server.listen(port, () => {
-  try {
-    console.log(chalk.cyan("[ionode-mqtt] server is running..."));
-  } catch (error) {
+server.listen(1883, (error) => {
+  if (!error) {
+    console.log(`${chalk.cyan("[ionode-mqtt]:")} server is running`);
+  } else {
     handleFatalError(error);
   }
 });
+
 server.on("listening", async () => {
-  try{
-  const service = await database(database_config);
-  Agent = service.Agent;
-  Metric = service.Metric;
-  }catch(err){
-    handleFatalError(err)
+  try {
+    const service = database(config);
+  } catch (err) {
+    handleFatalError(err);
   }
 });
 
@@ -56,11 +45,9 @@ aedes.on("publish", (packet, client) => {
   debug(`Payload: ${packet.payload}`);
 });
 
-process.on("uncaughtException", handleFatalError);
-process.on("unhandledRejection", handleFatalError);
-
-function handleFatalError(error) {
-  console.error(chalk.red(`[fatal-error]: ${error.message}`));
-  console.error(error.stack);
-  process.exit(1);
-}
+process.on("uncaughtException", (err) => {
+  handleFatalError(err);
+});
+process.on("unhandledRejection", (err) => {
+  handleFatalError(err);
+});

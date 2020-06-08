@@ -30,7 +30,8 @@
     "pg": "^8.2.1",
     "pg-hstore": "^2.3.3",
     "sequelize": "^5.21.11",
-    "sqlite3": "^4.2.0"
+    "sqlite3": "^4.2.0",
+    "platziverse-tools": "file:../tools"
   },
   "devDependencies": {
     "jest": "^26.0.1"
