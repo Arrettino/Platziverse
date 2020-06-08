@@ -33,6 +33,15 @@ server.listen(port, () => {
     handleFatalError(error);
   }
 });
+server.on("listening", async () => {
+  try{
+  const service = await database(database_config);
+  Agent = service.Agent;
+  Metric = service.Metric;
+  }catch(err){
+    handleFatalError(err)
+  }
+});
 
 aedes.on("client", (client) => {
   debug(`[client-connected] : ${client.id}`);
