@@ -62,7 +62,7 @@ class Agent extends EvenEmitter {
           if (this._metrics.size > 0) {
             const message = {
               agent: {
-                uuid: this._agentId,
+                id: this._agentId,
                 username: this._options.username,
                 name: this._options.name,
                 hostname: os.hostname() || this._options.hostname,
