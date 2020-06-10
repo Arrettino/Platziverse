@@ -9,5 +9,5 @@ module.exports = {
     handleFatalError,
     parsePayload,
     handleError,
-  },
+  }
 };

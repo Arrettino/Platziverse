@@ -14,6 +14,12 @@
     "url": "https://github.com/Arrettino/Platziverse/issues"
   },
   "homepage": "https://github.com/Arrettino/Platziverse#readme",
-  "dependencies": {},
+  "dependencies": {
+    "debug": "^4.1.1",
+    "defaults": "^1.0.3",
+    "mqtt": "^4.1.0",
+    "platziverse-tools": "file:../tools",
+    "uuid": "^8.1.0"
+  },
   "devDependencies": {}
 }
