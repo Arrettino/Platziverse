@@ -25,7 +25,7 @@ function setupMetric(MetricModel, AgentModel) {
     return metricsByAgentUuid;
   }
   async function findByTypeAgentId(metricType, agentId) {
-    const metricsByTypeAgentUuid = await MetricModel.findAll({
+    const metricsByTypeAgentId = await MetricModel.findAll({
       attributes: ["id", "type", "value", "createdAt"],
       where: {
         type: metricType,
@@ -43,7 +43,7 @@ function setupMetric(MetricModel, AgentModel) {
       ],
       raw: true,
     });
-    return metricsByTypeAgentUuid;
+    return metricsByTypeAgentId;
   }
 
   return {

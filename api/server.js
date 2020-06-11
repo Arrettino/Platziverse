@@ -1,7 +1,7 @@
 const http = require("http");
 const express = require("express");
 const chalk = require("chalk");
-
+const database = require("platziverse-db");
 const routes = require("./api");
 
 const port = process.env.PORT || 3000;

@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "DEBUG=platziverse:* nodemon server.js",
     "test": "jest"
-    },
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Arrettino/Platziverse.git"
@@ -20,7 +20,9 @@
   "dependencies": {
     "chalk": "^4.1.0",
     "debug": "^4.1.1",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "platziverse-db": "file:../db",
+    "platziverse-tools": "file:../tools"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

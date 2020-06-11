@@ -9,6 +9,11 @@ describe("routes api test", () => {
   });
 
   test("It should response the GET method", async () => {
-    await request.get("/api/agents").expect(200);
+    const response = await request
+      .get("/api/agents")
+      .expect(200)
+      .expect('content-Type', /json/)
+    let body = response.body
+    expect(body).toEqual({})
   });
 });
