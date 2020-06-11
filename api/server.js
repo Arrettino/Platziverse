@@ -1,14 +1,14 @@
 const http = require("http");
 const express = require("express");
-const chalk = require('chalk')
+const chalk = require("chalk");
 
-const api = require('./api')
+const routes = require("./api");
 
 const port = process.env.PORT || 3000;
 const app = express();
 const server = http.createServer(app);
 
-app.use('/api',api )
+routes(app);
 
 server.listen(port, () => {
   console.log(
