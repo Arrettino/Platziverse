@@ -9,22 +9,27 @@ jest.mock("platziverse-db", () =>
   })
 );
 
+const jwt = require("jsonwebtoken");
 const serverTest = require("../utils/testServer");
 const routes = require("../api");
+const { auth } = require("platziverse-tools");
 
 const agent = mockAgent.findOne;
 const agentId = agent.id;
 
 describe("routes api test", () => {
   let request = null;
+  let token = null;
 
   beforeEach(() => {
     request = serverTest(routes);
+    token = jwt.sign({ username: "jabriel", admin: true }, auth.secret);
   });
 
   test("It should response the GET method", async () => {
     const response = await request
       .get("/api/agents")
+      .set("Authorization", `Bearer ${token}`)
       .expect(200)
       .expect("content-Type", /json/);
 
@@ -35,6 +40,7 @@ describe("routes api test", () => {
   test("It should response the GET method", async () => {
     const response = await request
       .get(`/api/agent/${agentId}`)
+      .set("Authorization", `Bearer ${token}`)
       .expect(200)
       .expect("content-Type", /json/);
     const expected = await mockAgentService.findById(agentId);
@@ -45,6 +51,7 @@ describe("routes api test", () => {
   test("It should response the GET method", async () => {
     const response = await request
       .get(`/api/metrics/${agentId}`)
+      .set("Authorization", `Bearer ${token}`)
       .expect(200)
       .expect("content-Type", /json/);
     body = response.body;
@@ -53,14 +60,15 @@ describe("routes api test", () => {
   });
 
   test("It should response the GET method", async () => {
-    const type="disk"
+    const type = "disk";
     const response = await request
       .get(`/api/metrics/${agentId}/${type}`)
+      .set("Authorization", `Bearer ${token}`)
       .expect(200)
       .expect("content-Type", /json/);
 
     body = response.body;
-    expected = await mockMetricService.findByAgentId(type,agentId)
+    expected = await mockMetricService.findByAgentId(type, agentId);
     expect(body).toEqual(expected);
   });
-})
+});
