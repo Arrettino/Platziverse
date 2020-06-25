@@ -43,7 +43,6 @@ class Agent extends EvenEmitter {
       // Connect the mqtt server and then set the agent started status to true
       this._client = mqtt.connect(this._options.mqtt.host);
       this._started = true;
-
       // Agent will be subscribed to these topics
       this._client.subscribe("agent/connected");
       this._client.subscribe("agent/disconnected");
@@ -62,7 +61,6 @@ class Agent extends EvenEmitter {
           if (this._metrics.size > 0) {
             const message = {
               agent: {
-                id: this._agentId,
                 username: this._options.username,
                 name: this._options.name,
                 hostname: os.hostname() || this._options.hostname,

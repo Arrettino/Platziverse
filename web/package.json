@@ -1,0 +1,35 @@
+{
+  "name": "mqtt",
+  "version": "1.0.0",
+  "description": "A simple IoT Plataform - web",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "NODE_ENV=production node server",
+    "client": "cd client && npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Arrettino/Platziverse.git"
+  },
+  "author": "Ruben Pablo Arrettino",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Arrettino/Platziverse/issues"
+  },
+  "homepage": "https://github.com/Arrettino/Platziverse#readme",
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "concurrently": "^5.2.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.0",
+    "platziverse-agent": "file:../agent",
+    "platziverse-tools": "file:../tools",
+    "socket.io": "^2.3.0"
+  },
+  "devDependencies": {
+    "debug": "^4.1.1",
+    "nodemon": "^2.0.4"
+  }
+}
