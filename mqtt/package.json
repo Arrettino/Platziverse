@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/Arrettino/Platziverse#readme",
   "dependencies": {
-    "aedes": "0.41.0",
+    "aedes": "0.42.1",
     "aedes-persistence-redis": "7.0.0",
     "debug": "4.1.1",
     "platziverse-db": "file:../db",
